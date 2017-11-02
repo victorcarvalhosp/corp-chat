@@ -1,18 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-import {AngularFireDatabase} from "angularfire2/database";
+import {AngularFireDatabase, AngularFireList} from "angularfire2/database";
 import {User} from "../models/user.model";
+import {FirebaseListObservable} from "angularfire2/database-deprecated";
+import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class UserProvider {
 
+  users: Observable<User[]>;
+  usersRef: AngularFireList<any>;
+
   constructor(public http: Http,
               public afDB: AngularFireDatabase) {
-    console.log('Hello UserProvider Provider');
+    this.usersRef = this.afDB.list('/users');
+    this.users = this.usersRef.valueChanges();
   }
 
-  create(user: User){
-    return this.afDB.list('/users').push(user);
+  create(user){
+    return this.afDB.object('/users/'+user.uid).set(user);
+    //return this.usersRef.push(user);
   }
 }

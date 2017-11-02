@@ -2,6 +2,8 @@ import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AlertController, Loading, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {UserProvider} from "../../providers/user.provider";
+import {AuthProvider} from "../../providers/auth.provider";
+import {User} from "../../models/user.model";
 
 @Component({
   selector: 'page-signup',
@@ -16,7 +18,8 @@ export class SignupPage {
               public loadingCtrl: LoadingController,
               public navCtrl: NavController,
               public navParams: NavParams,
-              public userProvider: UserProvider) {
+              public userProvider: UserProvider,
+              public authProvider: AuthProvider) {
 
     let emailRegex = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
 
@@ -30,10 +33,23 @@ export class SignupPage {
   }
 
   onSubmit(): void {
-    this.userProvider.create(this.signupForm.value)
-      .then(() => {
-        console.log('Usuário cadastrado!')
-      });
+    let formUser= this.signupForm.value;
+
+    this.authProvider.createAuthUser({
+      email: formUser.email,
+      password: formUser.password
+    }).then((authState) => {
+      delete formUser.password;
+      formUser.uid = authState.uid;
+      console.log(formUser.uid + 'UID');
+      this.userProvider.create(formUser)
+        .then(() => {
+          console.log('Usuário cadastrado!')
+        });
+    });
+
+
+
   }
 
   private showLoading(): Loading {

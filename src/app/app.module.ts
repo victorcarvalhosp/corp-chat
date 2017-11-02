@@ -11,6 +11,8 @@ import {SignupPage} from "../pages/signup/signup";
 import { UserProvider } from '../providers/user.provider';
 import {HttpModule} from "@angular/http";
 import {AngularFireDatabaseModule} from "angularfire2/database";
+import { AuthProvider } from '../providers/auth.provider';
+import {AngularFireAuthModule} from "angularfire2/auth";
 
 const firebaseAppConfig: FirebaseAppConfig = {
   apiKey: "AIzaSyADpOCvJq80A8xgO50YDLkIqxpR3UMvgbk",
@@ -31,6 +33,7 @@ const firebaseAppConfig: FirebaseAppConfig = {
     HttpModule,
     IonicModule.forRoot(MyApp),
     AngularFireDatabaseModule,
+    AngularFireAuthModule,
     AngularFireModule.initializeApp(firebaseAppConfig)
   ],
   bootstrap: [IonicApp],
@@ -43,7 +46,8 @@ const firebaseAppConfig: FirebaseAppConfig = {
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    UserProvider
+    UserProvider,
+    AuthProvider
   ]
 })
 export class AppModule {}
