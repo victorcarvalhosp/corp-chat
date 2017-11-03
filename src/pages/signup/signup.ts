@@ -33,23 +33,40 @@ export class SignupPage {
   }
 
   onSubmit(): void {
-    let formUser= this.signupForm.value;
+    let loading: Loading = this.showLoading();
+    let formUser = this.signupForm.value;
+    let username = formUser.username;
 
-    this.authProvider.createAuthUser({
-      email: formUser.email,
-      password: formUser.password
-    }).then((authState) => {
-      delete formUser.password;
-      formUser.uid = authState.uid;
-      console.log(formUser.uid + 'UID');
-      this.userProvider.create(formUser)
-        .then(() => {
-          console.log('Usuário cadastrado!')
-        });
-    });
-
-
-
+    this.userProvider.userExists(username)
+      .first()
+      .subscribe((userExists: boolean) => {
+        if (!userExists) {
+          this.authProvider.createAuthUser({
+            email: formUser.email,
+            password: formUser.password
+          }).then((authState) => {
+            delete formUser.password;
+            formUser.uid = authState.uid;
+            console.log(formUser.uid + 'UID');
+            this.userProvider.create(formUser)
+              .then(() => {
+                console.log('Usuário cadastrado!')
+                loading.dismiss();
+              }).catch((error: any) => {
+              console.log(error);
+              loading.dismiss();
+              this.showAlert(error);
+            });
+          }).catch((error: any) => {
+            console.log(error);
+            loading.dismiss();
+            this.showAlert(error);
+          });
+        } else {
+          this.showAlert('O username ' + username + ' já está sendo utilizado em outra conta!');
+          loading.dismiss();
+        }
+      })
   }
 
   private showLoading(): Loading {

@@ -5,6 +5,7 @@ import {AngularFireAuth} from "angularfire2/auth";
 import * as firebase from "firebase";
 import {User} from "firebase";
 import {Observable} from "rxjs/Observable";
+import {BaseProvider} from "./base.provider";
 
 /*
   Generated class for the AuthProvider provider.
@@ -13,15 +14,16 @@ import {Observable} from "rxjs/Observable";
   and Angular DI.
 */
 @Injectable()
-export class AuthProvider {
+export class AuthProvider extends BaseProvider{
 
   constructor(public http: Http,
               public afAuth: AngularFireAuth) {
+    super();
     console.log('Hello AuthProvider Provider');
   }
 
   createAuthUser(user: {email:string, password: string}): Promise<User>{
-    return this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password);
+    return this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password).catch(this.handlePromiseError);
   }
 
 }
