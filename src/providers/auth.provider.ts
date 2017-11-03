@@ -26,4 +26,10 @@ export class AuthProvider extends BaseProvider{
     return this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password).catch(this.handlePromiseError);
   }
 
+  signinWithEmail(user: {email:string, password: string}): Promise<boolean>{
+    return this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password).then((authState) =>{
+      return authState != null;
+    }).catch(this.handlePromiseError);
+  }
+
 }

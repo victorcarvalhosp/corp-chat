@@ -4,6 +4,7 @@ import {AlertController, Loading, LoadingController, NavController, NavParams} f
 import {UserProvider} from "../../providers/user.provider";
 import {AuthProvider} from "../../providers/auth.provider";
 import {User} from "../../models/user.model";
+import {HomePage} from "../home/home";
 
 @Component({
   selector: 'page-signup',
@@ -52,6 +53,7 @@ export class SignupPage {
               .then(() => {
                 console.log('Usuário cadastrado!')
                 loading.dismiss();
+                this.navCtrl.setRoot(HomePage);
               }).catch((error: any) => {
               console.log(error);
               loading.dismiss();

@@ -13,6 +13,7 @@ import {HttpModule} from "@angular/http";
 import {AngularFireDatabaseModule} from "angularfire2/database";
 import { AuthProvider } from '../providers/auth.provider';
 import {AngularFireAuthModule} from "angularfire2/auth";
+import {SigninPage} from "../pages/signin/signin";
 
 const firebaseAppConfig: FirebaseAppConfig = {
   apiKey: "AIzaSyADpOCvJq80A8xgO50YDLkIqxpR3UMvgbk",
@@ -26,7 +27,8 @@ const firebaseAppConfig: FirebaseAppConfig = {
   declarations: [
     MyApp,
     HomePage,
-    SignupPage
+    SignupPage,
+    SigninPage
   ],
   imports: [
     BrowserModule,
@@ -40,7 +42,8 @@ const firebaseAppConfig: FirebaseAppConfig = {
   entryComponents: [
     MyApp,
     HomePage,
-    SignupPage
+    SignupPage,
+    SigninPage
   ],
   providers: [
     StatusBar,
