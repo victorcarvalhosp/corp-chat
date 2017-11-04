@@ -32,4 +32,18 @@ export class AuthProvider extends BaseProvider{
     }).catch(this.handlePromiseError);
   }
 
+  logout(): Promise<void>{
+    return this.afAuth.auth.signOut();
+  }
+
+  get authenticated(): Promise<boolean>{
+    return new Promise((resolve, reject) => {
+      this.afAuth.authState
+        .first()
+        .subscribe((authState) => {
+          (authState)? resolve(true) : reject(false);
+      })
+    })
+  }
+
 }

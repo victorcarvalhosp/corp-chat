@@ -78,4 +78,17 @@ export class SigninPage {
     }).present();
   }
 
+  goToHome(){
+    this.navCtrl.push(HomePage)
+      .then((hasAccess: boolean) => {
+        console.log('Autorizado:', hasAccess );
+      }).catch(err => {
+        console.log('Não autorizado', err);
+    })
+  }
+
+  logout(): void{
+    this.authProvider.logout();
+  }
+
 }

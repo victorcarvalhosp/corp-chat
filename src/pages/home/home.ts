@@ -5,6 +5,7 @@ import {AngularFireList} from "angularfire2/database";
 import {UserProvider} from "../../providers/user.provider";
 import {User} from "../../models/user.model";
 import {Observable} from "rxjs/Observable";
+import {AuthProvider} from "../../providers/auth.provider";
 
 @Component({
   selector: 'page-home',
@@ -13,11 +14,17 @@ import {Observable} from "rxjs/Observable";
 export class HomePage {
 
   users: Observable<User[]>;
+  view: string = 'chats';
 
 
-  constructor(public navCtrl: NavController,
+  constructor(public authProvider: AuthProvider,
+              public navCtrl: NavController,
               public userProvider: UserProvider) {
 
+  }
+
+  ionViewCanEnter(): Promise<boolean>{
+    return this.authProvider.authenticated;
   }
 
   ionViewDidLoad() {

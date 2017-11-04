@@ -14,6 +14,8 @@ import {AngularFireDatabaseModule} from "angularfire2/database";
 import { AuthProvider } from '../providers/auth.provider';
 import {AngularFireAuthModule} from "angularfire2/auth";
 import {SigninPage} from "../pages/signin/signin";
+import {CustomLoggedHeaderComponent} from "../components/custom-logged-header/custom-logged-header.component";
+import {CapitalizePipe} from "../pipes/capitalize.pipe";
 
 const firebaseAppConfig: FirebaseAppConfig = {
   apiKey: "AIzaSyADpOCvJq80A8xgO50YDLkIqxpR3UMvgbk",
@@ -25,6 +27,8 @@ const firebaseAppConfig: FirebaseAppConfig = {
 
 @NgModule({
   declarations: [
+    CapitalizePipe,
+    CustomLoggedHeaderComponent,
     MyApp,
     HomePage,
     SignupPage,
@@ -40,6 +44,7 @@ const firebaseAppConfig: FirebaseAppConfig = {
   ],
   bootstrap: [IonicApp],
   entryComponents: [
+    CustomLoggedHeaderComponent,
     MyApp,
     HomePage,
     SignupPage,
