@@ -6,6 +6,7 @@ import {UserProvider} from "../../providers/user.provider";
 import {User} from "../../models/user.model";
 import {Observable} from "rxjs/Observable";
 import {AuthProvider} from "../../providers/auth.provider";
+import {ChatPage} from "../chat/chat";
 
 @Component({
   selector: 'page-home',
@@ -37,6 +38,9 @@ export class HomePage {
 
   onChatCreate(user: User) {
     console.log(user);
+    this.navCtrl.push(ChatPage, {
+      recipientUser: user
+    })
   }
 
 }

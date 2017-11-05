@@ -53,7 +53,7 @@ export class SignupPage {
               .then(() => {
                 console.log('Usuário cadastrado!')
                 loading.dismiss();
-                this.navCtrl.setRoot(HomePage);
+                this.navCtrl.setRoot(HomePage)
               }).catch((error: any) => {
               console.log(error);
               loading.dismiss();
